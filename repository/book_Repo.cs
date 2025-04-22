@@ -1,4 +1,5 @@
-﻿using Library.DataAccess;
+﻿
+using Azure.Core;
 using Library.Models;
 using Microsoft.EntityFrameworkCore;
 namespace Library.repository
@@ -6,42 +7,42 @@ namespace Library.repository
 {
     public class book_Repo
     {
-        public AppDbContext context = new AppDbContext();
+        public LibraryLyContext context = new LibraryLyContext();
         public async Task<List<Book>> Getbooks()
         {
             return (context.Books.ToList());
         }
-        public async Task<int> PostNewBook(Book book)
-        {
-            var NewBook = new Book()
-            {
-                IdBook=book.IdBook,
-                IdUser = book.IdUser,
-                IdWriter = book.IdWriter,
-                IdChapter = book.IdChapter,
-                DataPost = book.DataPost,
-                Price = book.Price,
-            };
-            await context.Books.AddAsync(NewBook);
-            await context.SaveChangesAsync();
-            return book.IdUser;
+        public async Task<int> PostNewBook(int IdUser, int IdWriter, int IdChapter,string DataPost, decimal Price, string Name) { 
+        var NewBook = new Book()
+         {
+             IdUser = IdUser,
+             IdWriter = IdWriter,
+             IdChapter = IdChapter,
+             DataPost = DataPost,
+             Price = Price,
+             Name = Name,
+         };
+        await context.Books.AddAsync(NewBook);
+        await context.SaveChangesAsync();
+            return 0;
         }
-        public async Task<int> UpdateBook(Book book, int Idbook)
+        
+        public async Task<int> UpdateBook(int IdBook, int IdUser, int IdWriter, int IdChapter, string DataPost, decimal Price, string Name)
         {
-            var updateBook = context.Books.Find(Idbook);
+            var updateBook = context.Books.Find(IdBook);
             if (updateBook is null)
             {
-                return 0;
+                return (IdBook);
             }
-            updateBook.IdBook = book.IdBook;
-            updateBook.IdUser = book.IdUser;
-            updateBook.IdWriter = book.IdWriter;
-            updateBook.IdChapter = book.IdChapter;
-            updateBook.DataPost = book.DataPost;
-            updateBook. Price = book.Price;
-            context.SaveChanges();
-            return (Idbook);
+            updateBook.IdUser = IdUser;
+            updateBook.IdWriter = IdWriter;
+            updateBook.IdChapter = IdChapter;
+            updateBook.DataPost = DataPost;
+            updateBook.Price = Price;
+
+            await context.SaveChangesAsync();
+            return (IdBook);
         }
-        public async Task<int> DeleteBook(int Idbook) { await context.Books.Where(x => x.IdUser == Idbook).ExecuteDeleteAsync(); return (Idbook); }
+        public async Task<string> DeleteBook(string Name) { await context.Books.Where(x => x.Name == Name).ExecuteDeleteAsync(); return (Name); }
     }
 }

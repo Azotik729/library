@@ -1,4 +1,4 @@
-﻿using Library.DataAccess;
+﻿
 using Library.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity.Data;
@@ -10,7 +10,7 @@ namespace Library.repository
 {
     public class User_Repo
     {
-        public AppDbContext context = new AppDbContext();
+        public LibraryLyContext context = new LibraryLyContext();
         public async Task<List<User>> GetUsers()
         {
             return (context.Users.ToList());
@@ -40,13 +40,13 @@ namespace Library.repository
                 return 0;
             }
             updateUser.IdUser = user.IdUser;
-                updateUser.Login = user.Login;
-                updateUser.Password = user.Password;
-                updateUser.Role = user.Role;
-                updateUser.Adres = user.Adres;
-                updateUser.Phone = user.Phone;
-                updateUser.DateOfBirth = user.DateOfBirth;
-                updateUser.Fio = user.Fio;
+            updateUser.Login = user.Login;
+            updateUser.Password = user.Password;
+            updateUser.Role = user.Role;
+            updateUser.Adres = user.Adres;
+            updateUser.Phone = user.Phone;
+            updateUser.DateOfBirth = user.DateOfBirth;
+            updateUser.Fio = user.Fio;
             context.SaveChanges();
             return (IdUser);
         }

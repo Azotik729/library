@@ -5,7 +5,7 @@ namespace Library.Models;
 
 public partial class Chapter
 {
-    public int IdChapter { get; set; }
+    public int Id { get; set; }
 
     public string? Name { get; set; }
 

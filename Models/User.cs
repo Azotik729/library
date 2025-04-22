@@ -17,9 +17,11 @@ public partial class User
 
     public string? Phone { get; set; }
 
-    public string? DateOfBirth { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
 
     public string? Fio { get; set; }
+
+    public string? Roly { get; set; }
 
     public virtual Authorization? LoginNavigation { get; set; }
 

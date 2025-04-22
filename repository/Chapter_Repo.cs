@@ -1,4 +1,4 @@
-﻿using Library.DataAccess;
+﻿
 using Library.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +6,7 @@ namespace Library.repository
 {
     public class Chapter_Repo
     {
-        public AppDbContext context = new AppDbContext();
+        public LibraryLyContext context = new LibraryLyContext();
         public async Task<List<Chapter>> GetChapter()
         {
             return (context.Chapters.ToList());
@@ -15,12 +15,12 @@ namespace Library.repository
         {
             var NewChapter = new Chapter()
             {
-                IdChapter=chapter.IdChapter,
+                Id = chapter.Id,
                 Name = chapter.Name,
             };
             await context.Chapters.AddAsync(NewChapter);
             await context.SaveChangesAsync();
-            return chapter.IdChapter;
+            return chapter.Id;
         }
         public async Task<int> UpdateChapter(Chapter chapter, int IdChapter)
         {
@@ -29,11 +29,11 @@ namespace Library.repository
             {
                 return 0;
             }
-            updateChapter.IdChapter = chapter.IdChapter;
+            updateChapter.Id = chapter.Id;
             context.SaveChanges();
             return (IdChapter);
         }
-        public async Task<int> DeleteChapter(int IdChapter) { await context.Chapters.Where(x => x.IdChapter == IdChapter).ExecuteDeleteAsync(); return (IdChapter); }
+        public async Task<int> DeleteChapter(int IdChapter) { await context.Chapters.Where(x => x.Id == IdChapter).ExecuteDeleteAsync(); return (IdChapter); }
     }
 }
 

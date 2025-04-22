@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using Library.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.DataAccess;
+namespace Library.Models;
 
-public partial class AppDbContext : DbContext
+public partial class LibraryLyContext : DbContext
 {
-    public AppDbContext()
+    public LibraryLyContext()
     {
     }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
+    public LibraryLyContext(DbContextOptions<LibraryLyContext> options)
         : base(options)
     {
     }
@@ -30,7 +29,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=PK452-7\\SQLEXPRESS;Initial Catalog=LibraryLY;Integrated Security=True;Encrypt=False;");
+        => optionsBuilder.UseSqlServer("Server=PK452-7\\SQLEXPRESS;DataBase=LIbraryLY;Trusted_Connection=true;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -61,27 +60,28 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.IdChapter).HasColumnName("Id_chapter");
             entity.Property(e => e.IdUser).HasColumnName("Id_user");
             entity.Property(e => e.IdWriter).HasColumnName("Id_Writer");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .HasColumnName("name");
             entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.IdChapterNavigation).WithMany(p => p.Books)
                 .HasForeignKey(d => d.IdChapter)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_book_chapter");
 
             entity.HasOne(d => d.IdWriterNavigation).WithMany(p => p.Books)
                 .HasForeignKey(d => d.IdWriter)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_book_writer");
         });
 
         modelBuilder.Entity<Chapter>(entity =>
         {
-            entity.HasKey(e => e.IdChapter);
-
             entity.ToTable("chapter");
 
-            entity.Property(e => e.IdChapter).HasColumnName("Id_chapter");
-            entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .HasColumnName("name");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         modelBuilder.Entity<Ticket>(entity =>
@@ -121,10 +121,7 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.Adres)
                 .HasMaxLength(50)
                 .HasColumnName("adres");
-            entity.Property(e => e.DateOfBirth)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("date_of_birth");
+            entity.Property(e => e.DateOfBirth).HasColumnName("date_of_birth");
             entity.Property(e => e.Fio)
                 .HasMaxLength(50)
                 .HasColumnName("fio");
@@ -138,6 +135,9 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(12)
                 .HasColumnName("phone");
             entity.Property(e => e.Role).HasColumnName("role");
+            entity.Property(e => e.Roly)
+                .HasMaxLength(50)
+                .HasColumnName("roly");
 
             entity.HasOne(d => d.LoginNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Login)
@@ -146,14 +146,10 @@ public partial class AppDbContext : DbContext
 
         modelBuilder.Entity<Writer>(entity =>
         {
-            entity.HasKey(e => e.IdWriter);
-
             entity.ToTable("writer");
 
-            entity.Property(e => e.IdWriter).HasColumnName("Id_Writer");
-            entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .HasColumnName("name");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnName("name");
         });
 
         OnModelCreatingPartial(modelBuilder);
