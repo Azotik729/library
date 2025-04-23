@@ -39,6 +39,7 @@ namespace Library.repository
             updateBook.IdChapter = IdChapter;
             updateBook.DataPost = DataPost;
             updateBook.Price = Price;
+            updateBook.Name = Name;
 
             await context.SaveChangesAsync();
             return (IdBook);

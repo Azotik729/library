@@ -25,12 +25,13 @@ namespace Library.Controllers
         public async Task<int> PostNewBook([FromBody] BookRequest request)
         {
             
-            return await _repository.PostNewBook(request.IdUser, request.IdWriter, request.IdChapter,Convert.ToString(request.Price),Convert.ToDecimal(request.DataPost),request.Name);
+            return await _repository.PostNewBook(request.IdUser, request.IdWriter, request.IdChapter,request.DataPost,request.Price, request.Name);
         }
-        [HttpPut("{Name}")]
-        public async Task<string> UpdateBook(string Name, [FromBody] BookRequest request)
+        [HttpPatch("{IdBook}")]
+        public async Task<int> UpdateBook(int IdBook, [FromBody] BookRequest request)
         {
-            return await _repository.UpdateBook( request.IdUser, request.IdWriter, request.IdChapter, Convert.ToString(request.Price), Convert.ToInt32(request.DataPost), request.Name);
+
+            return await _repository.UpdateBook(IdBook,request.IdUser, request.IdWriter, request.IdChapter,request.DataPost, request.Price, request.Name);
 
         }
         [HttpDelete("{Name}")]

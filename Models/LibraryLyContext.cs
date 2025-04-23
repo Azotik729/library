@@ -55,7 +55,6 @@ public partial class LibraryLyContext : DbContext
 
             entity.Property(e => e.IdBook).HasColumnName("Id_Book");
             entity.Property(e => e.DataPost)
-                .IsUnicode(false)
                 .HasColumnName("Data_Post");
             entity.Property(e => e.IdChapter).HasColumnName("Id_chapter");
             entity.Property(e => e.IdUser).HasColumnName("Id_user");

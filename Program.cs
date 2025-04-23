@@ -20,4 +20,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+const string baseUrl = "http://localhost:5292/api";
+HttpClient apiClient = new HttpClient();
+
 app.Run();

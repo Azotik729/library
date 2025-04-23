@@ -11,26 +11,26 @@ namespace Library.repository
         {
             return (context.Authorizations.ToList());
         }
-        public async Task<string> CreateAutorizatione(Authorization Auto)
+        public async Task<string> CreateAutorizatione(string Login,string Password)
         {
             var NewAuto = new Authorization()
             {
-                Login = Auto.Login,
-                Password = Auto.Password,
+                Login = Login,
+                Password = Password,
             };
             await context.Authorizations.AddAsync(NewAuto);
             await context.SaveChangesAsync();
-            return Auto.Login;
+            return Login;
         }
-        public async Task<string> UpdateAutorizatione(Authorization Auto, string Password)
+        public async Task<string> UpdateAutorizatione(string Login, string Password)
         {
-            var updateAuto = context.Authorizations.Find(Password);
+            var updateAuto = context.Authorizations.Find(Login);
             if (updateAuto is null)
             {
                 return (Password);
             }
-            updateAuto.Login = Auto.Login;
-            updateAuto.Password = Auto.Password;
+            
+            updateAuto.Password = Password;
             context.SaveChanges();
             return (Password);
         }

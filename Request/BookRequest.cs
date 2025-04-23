@@ -6,6 +6,7 @@
 
     public class BookRequest ()
     {
+        public int IdBook { get; set; }
         public int IdUser { get; set; }
 
         public int IdWriter { get; set; }

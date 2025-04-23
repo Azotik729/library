@@ -15,38 +15,38 @@ namespace Library.repository
         {
             return (context.Users.ToList());
         }
-        public async Task<int> PostNewUser(User user)
+        public async Task<int> PostNewUser(int IdUser, string Login, string Password, int Role, string Adres, string Phone, DateOnly DateOfBirth, string Fio, string Roly)
         {
             var NewUser = new User()
             {
-                IdUser = user.IdUser,
-                Login = user.Login,
-                Password = user.Password,
-                Role = user.Role,
-                Adres = user.Adres,
-                Phone = user.Phone,
-                DateOfBirth = user.DateOfBirth,
-                Fio = user.Fio,
+                Login = Login,
+                Password = Password,
+                Role = Role,
+                Adres = Adres,
+                Phone = Phone,
+                DateOfBirth = DateOfBirth,
+                Fio = Fio,
             };
             await context.Users.AddAsync(NewUser);
             await context.SaveChangesAsync();
-            return user.IdUser;
+            return IdUser;
         }
-        public async Task<int> UpdateUser(User user, int IdUser)
+        public async Task<int> UpdateUser(int IdUser, string Login, string Password, int Role, string Adres, string Phone, DateOnly DateOfBirth, string Fio, string Roly)
         {
             var updateUser = context.Users.Find(IdUser);
             if (updateUser is null)
             {
                 return 0;
             }
-            updateUser.IdUser = user.IdUser;
-            updateUser.Login = user.Login;
-            updateUser.Password = user.Password;
-            updateUser.Role = user.Role;
-            updateUser.Adres = user.Adres;
-            updateUser.Phone = user.Phone;
-            updateUser.DateOfBirth = user.DateOfBirth;
-            updateUser.Fio = user.Fio;
+            updateUser.IdUser = IdUser;
+            updateUser.Login = Login;
+            updateUser.Password = Password;
+            updateUser.Role = Role;
+            updateUser.Adres =  Adres;
+            updateUser.Phone = Phone;
+            updateUser.DateOfBirth = DateOfBirth;
+            updateUser.Fio = Fio;
+            updateUser.Roly = Roly;
             context.SaveChanges();
             return (IdUser);
         }
