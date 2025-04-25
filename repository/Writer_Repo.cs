@@ -11,30 +11,31 @@ namespace Library.repository
         {
             return (context.Writers.ToList());
         }
-        public async Task<int> PostNewWriter(Writer writer)
+        public async Task<string> PostNewWriter(int id,string Name)
         {
-            var NewWriter = new Writer()
-            {
-                Id = writer.Id,
-                Name = writer.Name,
-            };
-            await context.Writers.AddAsync(NewWriter);
-            await context.SaveChangesAsync();
-            return writer.Id;
-        }
-        public async Task<int> UpdateWriter(Writer writer, int IdWriter)
-        {
-            var updateWriter = context.Writers.Find(IdWriter);
+            var updateWriter = context.Writers.Find(Name);
             if (updateWriter is null)
             {
-                return 0;
+                return (Name);
             }
-            updateWriter.Id = IdWriter;
-            updateWriter.Name = writer.Name;
+            updateWriter.Id = id;
+            updateWriter.Name = Name;
             await context.SaveChangesAsync();
             context.SaveChanges();
-            return (IdWriter);
+            return (Name);
         }
-        public async Task<int> DeleteBook(int IdWriter) { await context.Writers.Where(x => x.Id == IdWriter).ExecuteDeleteAsync(); return (IdWriter); }
+        public async Task<string> UpdateWriter(string Name)
+        {
+            var updateWriter = context.Writers.Find(Name);
+            if (updateWriter is null)
+            {
+                return Name;
+            }
+            updateWriter.Name = Name;
+            context.SaveChanges();
+            return (Name);
+        }
+
+        public async Task<string> DeleteWriter(string Name) { await context.Writers.Where(x => x.Name == Name).ExecuteDeleteAsync(); return (Name); }
     }
 }

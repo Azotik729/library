@@ -14,12 +14,12 @@ namespace Library.Controllers
     {
         private book_Repo _repository = new book_Repo();
         [HttpGet]
-        public async Task<ActionResult<List<Book>>> GetBooks()
+        public async Task <List<Book>> GetBooks()
         {
-            var books = _repository.Getbooks();
+            var books = await _repository.Getbooks();
             if (books == null)
-                return BadRequest(books);
-            else return Ok(books);
+                return books;
+            else return books;
         }
         [HttpPost]
         public async Task<int> PostNewBook([FromBody] BookRequest request)

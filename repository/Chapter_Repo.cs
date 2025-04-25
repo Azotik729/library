@@ -11,29 +11,28 @@ namespace Library.repository
         {
             return (context.Chapters.ToList());
         }
-        public async Task<int> PostNewChapter(Chapter chapter)
+        public async Task<string> PostNewChapter(string Name)
         {
             var NewChapter = new Chapter()
             {
-                Id = chapter.Id,
-                Name = chapter.Name,
+                Name = Name,
             };
             await context.Chapters.AddAsync(NewChapter);
             await context.SaveChangesAsync();
-            return chapter.Id;
+            return Name;
         }
-        public async Task<int> UpdateChapter(Chapter chapter, int IdChapter)
+        public async Task<string> UpdateChapter(string Name)
         {
-            var updateChapter = context.Chapters.Find(IdChapter);
+            var updateChapter = context.Chapters.Find(Name);
             if (updateChapter is null)
             {
-                return 0;
+                return (Name);
             }
-            updateChapter.Id = chapter.Id;
+            updateChapter.Name = Name;
             context.SaveChanges();
-            return (IdChapter);
+            return (Name);
         }
-        public async Task<int> DeleteChapter(int IdChapter) { await context.Chapters.Where(x => x.Id == IdChapter).ExecuteDeleteAsync(); return (IdChapter); }
+        public async Task<string> DeleteChapter(string Name) { await context.Chapters.Where(x => x.Name == Name).ExecuteDeleteAsync(); return (Name); }
     }
 }
 

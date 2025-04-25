@@ -12,12 +12,11 @@ namespace Library.Controllers
     {
           private User_Repo _repository = new User_Repo();
         [HttpGet]
-        public ActionResult<List<User>> GetUser()
+        public async Task<List<User>> GetUser()
         {
-            var users = _repository.GetUsers();
-            if (users == null)
-                return BadRequest(users);
-            else return Ok(users);
+            var users = await _repository.GetUsers();
+            return users;
+        
         }
         [HttpPost]
         public async Task<int> PostNewUser([FromBody] UserRequest request)
